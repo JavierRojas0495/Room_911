@@ -1,0 +1,180 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el contenedor principal */
+.container-fluid {
+    --margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+    margin-bottom: 60px; /* Agrega margen en la parte inferior para espacio para el footer */
+}
+
+/* Navbar */
+.navbar {
+    background-color: #00CED1;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    z-index: 1001;
+    position: fixed;
+    width: calc(100% - 250px);
+    left: 250px;
+    top: 0;
+    transition: left 0.3s, width 0.3s;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.navbar-brand i {
+    margin-right: 10px;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.navbar-toggler {
+    border-color: #fff;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #1A1A1A;
+    color: #fff;
+    padding-top: 20px;
+    z-index: 1000;
+    transition: width 0.3s;
+}
+
+.sidebar-header {
+    background-color: #333;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+/* Sidebar Collapse */
+.sidebar.sidebar-collapse {
+    width: 0;
+    overflow: hidden;
+}
+
+.sidebar.sidebar-collapse .sidebar-header, 
+.sidebar.sidebar-collapse .module {
+    display: none;
+}
+
+.sidebar.sidebar-collapse + .container-fluid,
+.sidebar.sidebar-collapse + .navbar,
+.sidebar.sidebar-collapse + .footer {
+    margin-left: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* Sidebar Toggle */
+.sidebar-toggle {
+    position: fixed;
+    top: 10px;
+    left: 250px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1002;
+    transition: left 0.3s;
+}
+
+.sidebar-toggle i {
+    font-size: 20px;
+}
+
+.sidebar.sidebar-collapse .sidebar-toggle {
+    left: 0;
+}
+
+/* Modules */
+.modules-list,
+.submodules-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.module a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.module a:hover {
+    background-color: #495057;
+}
+
+.submodules-list {
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.submodules-list li a {
+    color: #ddd;
+    padding: 5px 10px;
+}
+
+.submodules-list li a:hover {
+    background-color: #6c757d;
+}
+
+/* Footer */
+.footer {
+    --background-color: #1A1A1A;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    text-align: center;
+    z-index: 9999;
+    transition: left 0.3s, width 0.3s;
+}
+
+/* Responsiveness */
+@media (max-width: 767px) {
+    .navbar, .footer {
+        width: 100%;
+        left: 0;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative;
+    }
+
+    .sidebar-toggle {
+        position: static;
+    }
+}
+
+.footer-foo {
+    font-size: 14px;
+}

@@ -1,0 +1,6 @@
+first_name,last_name,document_number,phone_number,country_id,city_id,departament_id,birthdate,address,email,is_active
+Juan,Pérez,12345678,1122334455,1,1,1,1985-06-15,Avenida Siempre Viva 123,juan.perez@example.com,true
+María,Gómez,87654321,2233445566,2,22,2,1990-12-10,Calle Falsa 456,maria.gomez@example.com,true
+Carlos,López,34567890,3344556677,3,41,3,1978-08-20,Carrera 23 No. 12-34,carlos.lopez@example.com,false
+Lucía,Fernández,56789012,4455667788,4,61,4,1982-04-05,Avenida Central 789,lucia.fernandez@example.com,true
+Pedro,García,23456789,5566778899,5,63,5,1995-09-25,Bulevar del Norte,pedro.garcia@example.com,false

@@ -1,0 +1,48 @@
+/* Estilo para el contenedor del card */
+.card {
+    background: #ffffff;
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: #ffffff;
+    position: relative;
+}
+
+.card-header .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.card-header .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.alert {
+    border-radius: 0.25rem;
+}
+
+.alert-dismissible .close {
+    padding: 0.5rem;
+    color: #000;
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+}
+

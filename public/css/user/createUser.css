@@ -1,0 +1,71 @@
+/* Estilos para el formulario de registro de usuarios */
+
+/* Alinea el contenido del formulario al centro */
+.usuario-container {
+    margin-top: 50px;
+}
+
+.usuario-card {
+    border: 1px solid #ced4da; /* Cambia el color del borde */
+    border-radius: 15px; /* Redondea más las esquinas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.usuario-card-header {
+    background-color: #007bff; /* Cambia el color de fondo */
+    color: #fff;
+    border-radius: 15px 15px 0 0; /* Añade bordes redondeados solo arriba */
+    font-weight: bold; /* Hace que el texto del encabezado sea negrita */
+}
+
+.usuario-card-body {
+    padding: 30px;
+}
+
+.usuario-form-group {
+    margin-bottom: 30px; /* Aumenta el espaciado entre los elementos del formulario */
+}
+
+/* Estilos para los botones */
+.usuario-btn {
+    border-radius: 25px; /* Redondea más los botones */
+    padding: 12px 25px; /* Aumenta el espacio dentro de los botones */
+    font-size: 18px; /* Aumenta el tamaño del texto de los botones */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega un sombreado sutil */
+}
+
+.usuario-btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.usuario-btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Estilo para el campo de archivo */
+.usuario-form-control-file {
+    overflow: hidden;
+    position: relative;
+}
+
+.usuario-form-control-file input[type="file"] {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Estilo para la vista previa de la foto */
+#preview {
+    max-width: 300px; /* Reduce el tamaño máximo de la imagen de vista previa */
+    max-height: 300px;
+    display: block;
+    margin: auto;
+    border: 4px solid #545557; /* Aumenta el grosor del borde y cambia el color */
+    border-radius: 15px; /* Redondea las esquinas del borde */
+    padding: 10px;
+}
