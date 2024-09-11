@@ -1,4 +1,4 @@
-Dentro del proyecto se encuentra una carpeta con nombre BD dentro de ella estara para importar las tablas de la base de datos
+Dentro del proyecto se encuentra una carpeta con nombre BD en ella estara para importar las tablas de la base de datos
 
 recuerde crear una bd con nombre room_911 e importar los datos.
 
