@@ -36,7 +36,7 @@ CREATE TABLE `city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `city`
+-- Volcado de datos para la tabla `city`  
 --
 
 INSERT INTO `city` (`id`, `name`, `country_id`, `created_at`, `updated_at`) VALUES
