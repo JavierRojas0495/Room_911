@@ -136,6 +136,6 @@ class LoginController extends Controller
     public function logout()  
     {  
         Auth::logout(); // Cierra la sesión del usuario  
-        return redirect('/')->with('success', 'Sesión cerrada correctamente.'); // Redirigir a la página principal  
+        return redirect('/')->with('success', 'The session has been closed successfully.'); // Redirigir a la página principal  
     }
 }

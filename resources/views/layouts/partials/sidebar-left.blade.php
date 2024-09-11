@@ -24,69 +24,13 @@
 
         <li class="module">
             <a href="#" class="module-toggle" data-toggle="collapse" data-target="#submenu2" aria-expanded="false" aria-controls="submenu2">
-                <i class="fas fa-users"></i> <span>Module User Admin</span>
+                <i class="fas fa-users"></i> <span>Module Users Admin</span>
             </a>
             <ul class="submodules-list collapse" id="submenu2">
                 <li> <a href="{{ route('user.create') }}">
-                <i class="fas fa-user-plus"></i> Create User</a></li>
+                <i class="fas fa-user-plus"></i> Create Admin</a></li>
                 <li><a href="{{ route('user.index') }}">
-                <i class="fas fa-list"></i> List User</a></li>
-            </ul>
-        </li>
-
-        <!-- Módulo de Usuarios -->
-        <li class="module">
-            <a href="#" class="module-toggle" data-toggle="collapse" data-target="#usuariosSubMenu" aria-expanded="false" aria-controls="usuariosSubMenu">
-                <i class="fas fa-users"></i> <span>Usuarios</span>
-            </a>
-            <ul class="submodules-list collapse" id="usuariosSubMenu">
-                <li><a href="{{ route('user.create') }}">Registrar Usuario</a></li>
-                <li><a href="Usuarios/listarUsuarios/listarUsuarios.html">Listar Usuarios</a></li>
-            </ul>
-        </li>
-
-        <!-- Módulo de Registro de Productos -->
-        <li class="module">
-            <a href="#" class="module-toggle" data-toggle="collapse" data-target="#productosSubMenu" aria-expanded="false" aria-controls="productosSubMenu">
-                <i class="fas fa-box"></i> <span>Productos</span>
-            </a>
-            <ul class="submodules-list collapse" id="productosSubMenu">
-                <li><a href="#">Registrar Producto</a></li>
-                <li><a href="#">Listar Productos</a></li>
-            </ul>
-        </li>
-
-        <!-- Módulo de Tienda Virtual -->
-        <li class="module">
-            <a href="#" class="module-toggle" data-toggle="collapse" data-target="#tiendaSubMenu" aria-expanded="false" aria-controls="tiendaSubMenu">
-                <i class="fas fa-store"></i> <span>Tienda Virtual</span>
-            </a>
-            <ul class="submodules-list collapse" id="tiendaSubMenu">
-                <li><a href="#">Ver Catálogo</a></li>
-                <li><a href="#">Carrito de Compras</a></li>
-                <li><a href="#">Historial de Pedidos</a></li>
-            </ul>
-        </li>
-
-        <!-- Módulo de Tareas -->
-        <li class="module">
-            <a href="#" class="module-toggle" data-toggle="collapse" data-target="#tareasSubMenu" aria-expanded="false" aria-controls="tareasSubMenu">
-                <i class="fas fa-tasks"></i> <span>Tareas</span>
-            </a>
-            <ul class="submodules-list collapse" id="tareasSubMenu">
-                <li><a href="#">Crear Tarea</a></li>
-                <li><a href="#">Lista de Tareas</a></li>
-            </ul>
-        </li>
-
-        <!-- Módulo de SST -->
-        <li class="module">
-            <a href="#" class="module-toggle" data-toggle="collapse" data-target="#sstSubMenu" aria-expanded="false" aria-controls="sstSubMenu">
-                <i class="fas fa-hard-hat"></i> <span>SST</span>
-            </a>
-            <ul class="submodules-list collapse" id="sstSubMenu">
-                <li><a href="#">Reporte de Incidentes</a></li>
-                <li><a href="#">Políticas de Seguridad</a></li>
+                <i class="fas fa-list"></i> List Admin</a></li>
             </ul>
         </li>
     </ul>

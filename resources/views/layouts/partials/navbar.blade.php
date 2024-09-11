@@ -19,12 +19,9 @@
                 @endif   
             </a>  
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">  
-                <a class="dropdown-item" href="#">Configuración</a>  
-                <a class="dropdown-item" href="#">Cambiar Clave</a>  
-                <div class="dropdown-divider"></div>  
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">  
                     @csrf <!-- Asegúrate de incluir el token CSRF -->  
-                    <button type="submit" class="dropdown-item text-danger" style="cursor: pointer;">Cerrar Sesión</button>  
+                    <button type="submit" class="dropdown-item text-danger" style="cursor: pointer;">Logout</button>  
                 </form>  
             </div>  
         </li>  
