@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return 'Room 911 - Sistema funcionando correctamente!';
+});
+
+Route::get('/login', function () {
     return view('login/login');
 });
 require_once __DIR__ . '/login/login.php';
