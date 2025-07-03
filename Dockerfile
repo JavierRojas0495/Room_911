@@ -20,6 +20,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copiar archivos del proyecto
 COPY . .
 
+# Eliminar vendor si existe (por si acaso)
+RUN rm -rf vendor
+
 # Copiar archivo .env.example como .env si no existe
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
