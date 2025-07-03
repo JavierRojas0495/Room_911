@@ -15,7 +15,7 @@ echo "🔧 Generando APP_KEY si no existe..."
 php artisan key:generate --force || echo "⚠️ APP_KEY ya existe"
 
 echo "🔍 Verificando configuración..."
-php artisan config:show app.name || echo "⚠️ Error al verificar configuración"
+php artisan tinker --execute="echo 'App Name: ' . config('app.name') . PHP_EOL;" || echo "⚠️ Error al verificar configuración"
 
 echo "📝 Limpiando rutas (sin cachear para evitar errores)..."
 php artisan route:clear

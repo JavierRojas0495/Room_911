@@ -14,7 +14,43 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return 'Room 911 - Sistema funcionando correctamente!';
+    try {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Room 911 - Sistema funcionando correctamente!',
+            'app_name' => config('app.name'),
+            'app_env' => config('app.env'),
+            'app_debug' => config('app.debug'),
+            'database_connection' => config('database.default'),
+            'timestamp' => now()
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ], 500);
+    }
+});
+
+Route::get('/test', function () {
+    return 'Test simple - Laravel funciona!';
+});
+
+Route::get('/env-check', function () {
+    return response()->json([
+        'APP_NAME' => env('APP_NAME'),
+        'APP_ENV' => env('APP_ENV'),
+        'APP_KEY' => env('APP_KEY') ? 'Set' : 'Not Set',
+        'APP_DEBUG' => env('APP_DEBUG'),
+        'APP_URL' => env('APP_URL'),
+        'DB_CONNECTION' => env('DB_CONNECTION'),
+        'DB_HOST' => env('DB_HOST'),
+        'DB_DATABASE' => env('DB_DATABASE'),
+        'DB_USERNAME' => env('DB_USERNAME'),
+        'DB_PASSWORD' => env('DB_PASSWORD') ? 'Set' : 'Not Set'
+    ]);
 });
 
 Route::get('/login', function () {
