@@ -12,6 +12,9 @@ php artisan key:generate --force
 echo "🔍 Verificando APP_KEY..."
 php artisan tinker --execute="echo 'APP_KEY: ' . config('app.key') . PHP_EOL;" || echo "⚠️ Error al verificar APP_KEY"
 
+echo "🔧 Verificando archivo .env..."
+cat .env | grep APP_KEY || echo "⚠️ APP_KEY no encontrado en .env"
+
 echo "🔍 Verificando variables de entorno..."
 php artisan tinker --execute="echo 'APP_NAME: ' . env('APP_NAME') . PHP_EOL; echo 'DB_HOST: ' . env('DB_HOST') . PHP_EOL; echo 'APP_URL: ' . env('APP_URL') . PHP_EOL;" || echo "⚠️ Error al verificar variables"
 

@@ -20,13 +20,24 @@ Route::get('/', function () {
         $appKey = config('app.key');
         $appEnv = config('app.env');
 
+        // Verificar si hay errores en los logs
+        $logFile = storage_path('logs/laravel.log');
+        $recentLogs = '';
+        if (file_exists($logFile)) {
+            $recentLogs = file_get_contents($logFile);
+            if (strlen($recentLogs) > 1000) {
+                $recentLogs = substr($recentLogs, -1000);
+            }
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Laravel está funcionando correctamente!',
             'app_name' => $appName,
             'app_key' => $appKey ? 'Set' : 'Not Set',
             'app_env' => $appEnv,
-            'timestamp' => now()->toISOString()
+            'timestamp' => now()->toISOString(),
+            'recent_logs' => $recentLogs
         ]);
     } catch (Exception $e) {
         return response()->json([
@@ -41,6 +52,13 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
     return 'Test simple - Laravel funciona!';
+});
+
+Route::get('/phpinfo', function () {
+    ob_start();
+    phpinfo();
+    $phpinfo = ob_get_clean();
+    return response($phpinfo, 200, ['Content-Type' => 'text/html']);
 });
 
 Route::get('/env-check', function () {
