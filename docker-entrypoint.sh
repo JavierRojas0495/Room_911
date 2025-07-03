@@ -10,6 +10,12 @@ php artisan tinker --execute="echo 'APP_KEY: ' . config('app.key') . PHP_EOL;" |
 echo "🔍 Verificando variables de entorno..."
 php artisan tinker --execute="echo 'APP_NAME: ' . env('APP_NAME') . PHP_EOL; echo 'DB_HOST: ' . env('DB_HOST') . PHP_EOL; echo 'APP_URL: ' . env('APP_URL') . PHP_EOL;" || echo "⚠️ Error al verificar variables"
 
+echo "📦 Ejecutando migraciones..."
+php artisan migrate --force || echo "⚠️ Error en migraciones"
+
+echo "🌱 Ejecutando seeders..."
+php artisan db:seed --force || echo "⚠️ Error en seeders"
+
 echo "⚙️ Limpiando configuración..."
 php artisan config:clear
 
