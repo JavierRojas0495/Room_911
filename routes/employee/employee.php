@@ -1,37 +1,37 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmpleadoControlador;
 use App\Http\Controllers\PdfController;
 
 // Listar todos los empleados
-Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
+Route::get('/empleado', [EmpleadoControlador::class, 'indice'])->name('empleado.indice');
 
 // Mostrar el formulario de creación
-Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
+Route::get('/empleado/crear', [EmpleadoControlador::class, 'crear'])->name('empleado.crear');
 
 // Almacenar un nuevo empleado
-Route::post('/employee', [EmployeeController::class, 'store'])->name('employee.store');
+Route::post('/empleado', [EmpleadoControlador::class, 'guardar'])->name('empleado.guardar');
 
 // Obtener las ciudades dependiendo del país seleccionado (AJAX)
-Route::get('/getCities/{countryId}', [EmployeeController::class, 'getCities'])->name('employee.getCities');
+Route::get('/obtenerCiudades/{paisId}', [EmpleadoControlador::class, 'obtenerCiudades'])->name('empleado.obtenerCiudades');
 
 // Mostrar el formulario de edición para un empleado específico
-Route::get('/employee/{employee}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
+Route::get('/empleado/{empleado}/editar', [EmpleadoControlador::class, 'editar'])->name('empleado.editar');
 
 // Actualizar un empleado existente
-Route::put('/employee/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
+Route::put('/empleado/{empleado}', [EmpleadoControlador::class, 'actualizar'])->name('empleado.actualizar');
 
 // Eliminar un empleado
-Route::delete('/employee/{employee}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
+Route::delete('/empleado/{empleado}', [EmpleadoControlador::class, 'eliminar'])->name('empleado.eliminar');
 
 // Cambiar Estado Empleado
-Route::patch('/employee/{employee}/toggle-status', [EmployeeController::class, 'toggleStatus'])->name('employee.toggleStatus');
+Route::patch('/empleado/{empleado}/alternar-estado', [EmpleadoControlador::class, 'alternarEstado'])->name('empleado.alternarEstado');
 
 // Importar Empleados CSV
-Route::post('/employee/import', [EmployeeController::class, 'import'])->name('employee.import');
+Route::post('/empleado/importar', [EmpleadoControlador::class, 'importar'])->name('empleado.importar');
 
-// List History
-Route::get('/employee/{employeeId}/history', [EmployeeController::class, 'history'])->name('employee.history');
+// Historial de accesos
+Route::get('/empleado/{empleadoId}/historial', [EmpleadoControlador::class, 'historial'])->name('empleado.historial');
 
-// PDF History
-Route::get('/employee/{employeeId}/generate-pdf', [PdfController::class, 'generatePdf'])->name('employee.generatePdf');
+// PDF Historial
+Route::get('/empleado/{empleadoId}/generar-pdf', [PdfController::class, 'generatePdf'])->name('empleado.generarPdf');

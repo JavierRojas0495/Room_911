@@ -1,64 +1,82 @@
 @extends('layouts.partials.dashboard')
 
 @section('content')
-    <div class="container col-md-6 mt-5">
-        <div class="row justify-content-center">
-            <div class="col">
-                <div class="card shadow-lg border-0 rounded-lg">
-                    <div class="card-header bg-dark text-white text-center">
-                        <h4 class="mb-0">Edit User</h4>
-                    </div>
-
-                    <div class="card-body py-4">
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form method="POST" action="{{ route('user.update', $user->id) }}">
-                            @csrf
-                            @method('PUT')
-                            <div class="form-group">
-                                <label for="first_name" class="font-weight-bold">First Name</label>
-                                <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Enter First Name" value="{{ old('first_name', $user->first_name) }}" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="last_name" class="font-weight-bold">Last Name</label>
-                                <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Enter Last Name" value="{{ old('last_name', $user->last_name) }}" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="document_number" class="font-weight-bold">Document Number</label>
-                                <input type="text" name="document_number" class="form-control" id="document_number" placeholder="Enter Document Number" value="{{ old('document_number', $user->document_number) }}" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password" class="font-weight-bold">Password (Leave blank to keep current)</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email" class="font-weight-bold">Email</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" value="{{ old('email', $user->email) }}" required>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success btn-block font-weight-bold">Update User</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="card-footer text-center bg-light py-2">
-                        <a href="{{ route('user.index') }}" class="btn btn-secondary">Back to Users List</a>
+<div class="form-card-center">
+    <div class="card formulario-empleado shadow-sm border-0">
+        <div class="card-header">
+            <h4 class="mb-0"><i class="fas fa-user-edit me-2"></i>Editar Administrador</h4>
+        </div>
+        <div class="card-body">
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form method="POST" action="{{ route('user.update', $user->id) }}" class="mx-auto" style="max-width: 400px;">
+                @csrf
+                @method('PUT')
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">Nombre</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="first_name" class="form-control" id="first_name" placeholder="Ingrese el nombre" value="{{ old('first_name', $user->first_name) }}" required>
                     </div>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Apellido</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user-circle"></i>
+                        <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Ingrese el apellido" value="{{ old('last_name', $user->last_name) }}" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="document_number" class="form-label">Número de Documento</label>
+                    <div class="input-icon">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" name="document_number" class="form-control" id="document_number" placeholder="Ingrese el número de documento" value="{{ old('document_number', $user->document_number) }}" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese el correo electrónico" value="{{ old('email', $user->email) }}" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña <span class="text-muted" style="font-size:0.9em;">(dejar en blanco para mantener la actual)</span></label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese la nueva contraseña">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center gap-2 mt-4">
+                    <button type="submit" class="btn btn-success px-4"><i class="fas fa-save me-1"></i>Actualizar</button>
+                    <a href="{{ route('user.index') }}" class="btn btn-secondary px-4"><i class="fas fa-home me-1"></i>Inicio</a>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+<style>
+.input-icon {
+    position: relative;
+}
+.input-icon i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-size: 1rem;
+    pointer-events: none;
+}
+.input-icon .form-control {
+    padding-left: 2.2em;
+}
+</style>
 @endsection

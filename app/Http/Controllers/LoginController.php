@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\Empleado;
 use App\Models\User;
-use App\Models\LoginLog; // Importar el modelo LoginLog
+use App\Models\RegistroInicioSesion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth; // Importar la fachada Auth
-use Carbon\Carbon; // Importar Carbon para manejar fechas y horas
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -33,57 +33,49 @@ class LoginController extends Controller
         if ($user) {
             // Verificar si el usuario está activo
             if (!$user->is_active) {
-                // Registrar el intento fallido en el log por cuenta inactiva
-                LoginLog::create([
+                RegistroInicioSesion::create([
                     'employee_id' => $request->employee_id,
-                    'user_type' => 'user',
-                    'status' => 'failed - account inactive',
-                    'attempt_on_date' => Carbon::now()->format('Y-m-d'),  // Solo la fecha
-                    'attempt_in_time' => Carbon::now()->format('H:i:s'),  // Solo la hora
-                ]);
-
-                return back()->with('error', 'Your account is inactive. Please contact support.');
-            }
-
-            // Verificar la contraseña
-            if (Hash::check($request->password, $user->password)) {
-                // Iniciar sesión
-                Auth::login($user);
-
-                // Registrar el intento exitoso en el log
-                LoginLog::create([
-                    'employee_id' => $request->employee_id,
-                    'user_type' => 'user',
-                    'status' => 'success',
-                    'attempt_on_date' => Carbon::now()->format('Y-m-d'),  // Solo la fecha
-                    'attempt_in_time' => Carbon::now()->format('H:i:s'),  // Solo la hora
-                ]);
-
-                return redirect()->route('employee.index')->with('success', 'Login successful');
-            } else {
-                // Registrar el intento fallido en el log
-                LoginLog::create([
-                    'employee_id' => $request->employee_id,
-                    'user_type' => 'user',
-                    'status' => 'failed - incorrect password',
+                    'user_type' => 'usuario',
+                    'status' => 'fallido',
+                    'failure_reason' => 'cuenta inactiva',
                     'attempt_on_date' => Carbon::now()->format('Y-m-d'),
                     'attempt_in_time' => Carbon::now()->format('H:i:s'),
                 ]);
-
-                return back()->with('error', 'Invalid credentials');
+                return back()->with('error', 'Tu cuenta está inactiva. Por favor contacta al soporte.');
             }
-        } else {
-            // Registrar el intento fallido en el log
-            LoginLog::create([
-                'employee_id' => $request->employee_id,
-                'user_type' => 'user',
-                'status' => 'failed - user not found',
-                'attempt_on_date' => Carbon::now()->format('Y-m-d'),
-                'attempt_in_time' => Carbon::now()->format('H:i:s'),
-            ]);
-
-            return back()->with('error', 'Invalid credentials');
+            // Verificar la contraseña
+            if (Hash::check($request->password, $user->password)) {
+                Auth::login($user);
+                RegistroInicioSesion::create([
+                    'employee_id' => $request->employee_id,
+                    'user_type' => 'usuario',
+                    'status' => 'exitoso',
+                    'failure_reason' => null,
+                    'attempt_on_date' => Carbon::now()->format('Y-m-d'),
+                    'attempt_in_time' => Carbon::now()->format('H:i:s'),
+                ]);
+                return redirect()->route('empleado.indice')->with('success', 'Inicio de sesión exitoso');
+            } else {
+                RegistroInicioSesion::create([
+                    'employee_id' => $request->employee_id,
+                    'user_type' => 'usuario',
+                    'status' => 'fallido',
+                    'failure_reason' => 'contraseña incorrecta',
+                    'attempt_on_date' => Carbon::now()->format('Y-m-d'),
+                    'attempt_in_time' => Carbon::now()->format('H:i:s'),
+                ]);
+                return back()->with('error', 'Credenciales inválidas');
+            }
         }
+        RegistroInicioSesion::create([
+            'employee_id' => $request->employee_id,
+            'user_type' => 'usuario',
+            'status' => 'fallido',
+            'failure_reason' => 'usuario no encontrado',
+            'attempt_on_date' => Carbon::now()->format('Y-m-d'),
+            'attempt_in_time' => Carbon::now()->format('H:i:s'),
+        ]);
+        return back()->with('error', 'Credenciales inválidas');
     }
 
     // Mostrar el formulario de login para empleados (sin contraseña)
@@ -94,48 +86,43 @@ class LoginController extends Controller
 
     public function authorizeEmployee(Request $request)
     {
-        $employee = Employee::find($request->employee_id);
-
-        if ($employee) {
-            // Verificar si el empleado está activo
-            if (!$employee->is_active) {
-                LoginLog::create([
+        $empleado = Empleado::find($request->employee_id);
+        if ($empleado) {
+            if (!$empleado->is_active) {
+                RegistroInicioSesion::create([
                     'employee_id' => $request->employee_id,
-                    'user_type' => 'employee',
-                    'status' => 'failed - account inactive',
+                    'user_type' => 'empleado',
+                    'status' => 'fallido',
+                    'failure_reason' => 'cuenta inactiva',
                     'attempt_on_date' => Carbon::now()->format('Y-m-d'),
                     'attempt_in_time' => Carbon::now()->format('H:i:s'),
                 ]);
-
-                return back()->with('error', 'Your account is inactive.');
+                return back()->with('error', 'Tu cuenta está inactiva.');
             }
-
-            // Registrar el intento exitoso en el log
-            LoginLog::create([
+            RegistroInicioSesion::create([
                 'employee_id' => $request->employee_id,
-                'user_type' => 'employee',
-                'status' => 'success',
+                'user_type' => 'empleado',
+                'status' => 'exitoso',
+                'failure_reason' => null,
                 'attempt_on_date' => Carbon::now()->format('Y-m-d'),
                 'attempt_in_time' => Carbon::now()->format('H:i:s'),
             ]);
-
-            return redirect()->route('login.authorized')->with('success', 'Access granted');
-        } else {
-            LoginLog::create([
-                'employee_id' => $request->employee_id,
-                'user_type' => 'employee',
-                'status' => 'failed - employee not found',
-                'attempt_on_date' => Carbon::now()->format('Y-m-d'),
-                'attempt_in_time' => Carbon::now()->format('H:i:s'),
-            ]);
-
-            return back()->with('error', 'Invalid credentials');
+            return redirect()->route('login.authorized')->with('success', 'Acceso concedido');
         }
+        RegistroInicioSesion::create([
+            'employee_id' => $request->employee_id,
+            'user_type' => 'empleado',
+            'status' => 'fallido',
+            'failure_reason' => 'empleado no encontrado',
+            'attempt_on_date' => Carbon::now()->format('Y-m-d'),
+            'attempt_in_time' => Carbon::now()->format('H:i:s'),
+        ]);
+        return back()->with('error', 'Credenciales inválidas');
     }
 
-    public function logout()  
-    {  
-        Auth::logout(); // Cierra la sesión del usuario  
-        return redirect('/')->with('success', 'The session has been closed successfully.'); // Redirigir a la página principal  
+    public function logout()
+    {
+        Auth::logout(); // Cierra la sesión del usuario
+        return redirect('/')->with('success', 'La sesión se ha cerrado correctamente.'); // Redirigir a la página principal
     }
 }

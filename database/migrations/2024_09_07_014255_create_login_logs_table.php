@@ -10,11 +10,12 @@ class CreateLoginLogsTable extends Migration
     {
         Schema::create('login_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_id');
+            $table->unsignedBigInteger('employee_id');
             $table->string('user_type');
             $table->string('status');
-            $table->date('attempt_on_date');  // Campo solo para la fecha
-            $table->time('attempt_in_time');  // Campo solo para la hora
+            $table->string('failure_reason')->nullable();
+            $table->date('attempt_on_date');
+            $table->time('attempt_in_time');
             $table->timestamps();
         });
     }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Historial</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        #result { margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Prueba del Sistema de Historial</h1>
+
+    <div class="test-section">
+        <h3>Prueba 1: Historial sin filtros</h3>
+        <button onclick="testHistorial(1)">Cargar Historial Empleado ID 1</button>
+    </div>
+
+    <div class="test-section">
+        <h3>Prueba 2: Historial con filtros</h3>
+        <label>Fecha Inicio: <input type="date" id="fechaInicio" value="2024-01-01"></label><br><br>
+        <label>Fecha Fin: <input type="date" id="fechaFin" value="2024-12-31"></label><br><br>
+        <button onclick="testHistorialConFiltros(1)">Cargar Historial con Filtros</button>
+    </div>
+
+    <div class="test-section">
+        <h3>Prueba 3: Verificar Headers AJAX</h3>
+        <button onclick="testHeaders()">Probar Headers AJAX</button>
+    </div>
+
+    <div id="result">
+        <h3>Resultado:</h3>
+        <div id="resultContent">Haz clic en un botón para probar...</div>
+    </div>
+
+    <script>
+        function testHistorial(empleadoId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `/test-historial/${empleadoId}`, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+            xhr.onload = function() {
+                document.getElementById('resultContent').innerHTML =
+                    `<h4>Respuesta (Status: ${xhr.status}):</h4>
+                     <pre>${xhr.responseText.substring(0, 500)}...</pre>`;
+            };
+
+            xhr.onerror = function() {
+                document.getElementById('resultContent').innerHTML =
+                    '<p style="color: red;">Error en la petición AJAX</p>';
+            };
+
+            xhr.send();
+        }
+
+        function testHistorialConFiltros(empleadoId) {
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            const fechaFin = document.getElementById('fechaFin').value;
+
+            const url = `/empleado/${empleadoId}/historial?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+            xhr.onload = function() {
+                document.getElementById('resultContent').innerHTML =
+                    `<h4>Respuesta con Filtros (Status: ${xhr.status}):</h4>
+                     <pre>${xhr.responseText.substring(0, 500)}...</pre>`;
+            };
+
+            xhr.onerror = function() {
+                document.getElementById('resultContent').innerHTML =
+                    '<p style="color: red;">Error en la petición AJAX con filtros</p>';
+            };
+
+            xhr.send();
+        }
+
+        function testHeaders() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/empleado/1/historial', true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Accept', 'text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8');
+
+            xhr.onload = function() {
+                document.getElementById('resultContent').innerHTML =
+                    `<h4>Headers AJAX (Status: ${xhr.status}):</h4>
+                     <p>X-Requested-With: ${xhr.getResponseHeader('X-Requested-With') || 'No encontrado'}</p>
+                     <pre>${xhr.responseText.substring(0, 300)}...</pre>`;
+            };
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

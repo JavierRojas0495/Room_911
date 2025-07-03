@@ -1,0 +1,44 @@
+# Laravel
+/vendor/
+/node_modules/
+/public/storage
+/storage/*.key
+.env
+.env.*
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+/public/hot
+/public/storage
+/storage/app/public
+/storage/debugbar
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+/storage/logs
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db
+npm-debug.log
+yarn-error.log
+composer.lock
+package-lock.json
+# Archivos de sistema
+*.log
+*.sqlite
+*.bak
+*.tmp
+# Archivos de pruebas y coverage
+/coverage/
+/.phpunit.result.cache
+# Archivos de configuración de IDE
+*.iml
+/.phpstorm.meta.php
+# Archivos de usuario
+*.swp
+*.swo
+# Archivos de migraciones y seeders generados automáticamente (opcional)
+# /database/migrations/*.php
+# /database/seeders/*.php

@@ -1,54 +1,63 @@
 <?php
 
-namespace App\Http\Controllers;  
+namespace App\Http\Controllers;
 
-use Dompdf\Dompdf;  
-use Dompdf\Options;  
-use Illuminate\Http\Request;  
-use App\Models\LoginLog; // Asegúrate de que este modelo esté bien configurado  
-use App\Models\Employee; // Asegúrate de que este modelo esté bien configurado  
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Http\Request;
+use App\Models\RegistroInicioSesion;
+use App\Models\Empleado;
 
-class PdfController extends Controller  
-{  
-    public function generatePdf(Request $request, $employeeId)  
-    {  
-        // Obtener el empleado  
-        $employee = Employee::find($employeeId);  
-        if (!$employee) {  
-            return abort(404, 'Employee not found');  
-        }  
+class PdfController extends Controller
+{
+    public function generatePdf(Request $request, $empleadoId)
+    {
+        // Obtener el empleado
+        $empleado = Empleado::find($empleadoId);
+        if (!$empleado) {
+            return abort(404, 'Empleado no encontrado');
+        }
 
-        // Obtener registros de login según los parámetros  
-        $logs = LoginLog::where('employee_id', $employeeId)  
-            ->where('user_type', 'employee');  
+        // Obtener registros de inicio de sesión según los parámetros
+        $registros = RegistroInicioSesion::where('employee_id', (string)$empleadoId)
+            ->whereIn('user_type', ['employee', 'empleado', 'usuario']);
 
-        if ($request->start_date && $request->end_date) {  
-            $logs->whereBetween('attempt_on_date', [$request->start_date, $request->end_date]);  
-        }  
+        // Aplicar filtros de fecha
+        if ($request->fecha_inicio && $request->fecha_fin) {
+            $registros->whereBetween('attempt_on_date', [$request->fecha_inicio, $request->fecha_fin]);
+        } elseif ($request->fecha_inicio) {
+            $registros->where('attempt_on_date', '>=', $request->fecha_inicio);
+        } elseif ($request->fecha_fin) {
+            $registros->where('attempt_on_date', '<=', $request->fecha_fin);
+        }
 
-        $logs = $logs->get();  
+        $registros = $registros->orderBy('attempt_on_date', 'desc')
+                               ->orderBy('attempt_in_time', 'desc')
+                               ->get();
 
-        // Configuración de DomPDF  
-        $options = new Options();  
-        $options->set('defaultFont', 'Arial');  
-        $dompdf = new Dompdf($options);  
+        // Configuración de DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
 
-        // Cargar vista  
-        $html = view('employee.pdf_history', [  
-            'logs' => $logs,  
-            'employee' => $employee // Pasar el empleado a la vista  
-        ])->render();  
+        // Cargar vista
+        $html = view('employee.pdf_history', [
+            'registros' => $registros,
+            'empleado' => $empleado,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin
+        ])->render();
 
-        // Cargar el contenido HTML  
-        $dompdf->loadHtml($html);  
+        // Cargar el contenido HTML
+        $dompdf->loadHtml($html);
 
-        // (Opcional) Configurar tamaño y orientación  
-        $dompdf->setPaper('A4', 'landscape');  
+        // (Opcional) Configurar tamaño y orientación
+        $dompdf->setPaper('A4', 'landscape');
 
-        // Renderizar el PDF  
-        $dompdf->render();  
+        // Renderizar el PDF
+        $dompdf->render();
 
-        // Descargar el PDF  
-        return $dompdf->stream("access_history_employee_{$employeeId}.pdf");  
-    }  
+        // Descargar el PDF
+        return $dompdf->stream("historial_accesos_empleado_{$empleadoId}.pdf");
+    }
 }

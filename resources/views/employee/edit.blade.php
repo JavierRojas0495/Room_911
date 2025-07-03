@@ -1,155 +1,120 @@
 @extends('layouts.partials.dashboard')
 
 @section('content')
-    <div class="container-fluid col-md-8 mt-5">
-        <div class="row justify-content-center">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header bg-dark text-white">
-                        <h4 class="mb-0">Edit Employee</h4>
+<div class="form-card-center">
+    <div class="card formulario-empleado shadow-sm border-0">
+        <div class="card-header">
+            <h4 class="mb-0"><i class="fas fa-user-edit me-2"></i>Editar Empleado</h4>
+        </div>
+        <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('empleado.actualizar', ['empleado' => $empleado->id]) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" id="nombre" value="{{ old('nombre', $empleado->nombre) }}" required>
                     </div>
-
-                    <div class="card-body">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        <!-- Mostrar errores de validación -->
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form method="POST" action="{{ route('employee.update', $employee->id) }}">
-                            @csrf
-                            @method('PUT')
-
-                            <!-- Form Fields -->
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" name="first_name" class="form-control" id="first_name" value="{{ old('first_name', $employee->first_name) }}" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control" id="last_name" value="{{ old('last_name', $employee->last_name) }}" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="departament_id">Departament</label>
-                                    <select name="departament_id" id="departament_id" class="form-control" required>
-                                        <option value="" selected disabled>Select Departament</option>
-                                        @foreach($departaments as $departament)
-                                            <option value="{{ $departament->id }}" {{ old('departament_id', $employee->departament_id) == $departament->id ? 'selected' : '' }}>{{ $departament->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="document_number">Document Number</label>
-                                    <input type="text" name="document_number" class="form-control" id="document_number" value="{{ old('document_number', $employee->document_number) }}" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="phone_number">Phone Number</label>
-                                    <input type="text" name="phone_number" class="form-control" id="phone_number" value="{{ old('phone_number', $employee->phone_number) }}" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" value="{{ old('email', $employee->email) }}" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="country_id">Country</label>
-                                    <select name="country_id" id="country_id" class="form-control" required>
-                                        <option value="" selected disabled>Select country</option>
-                                        @foreach($countries as $country)
-                                            <option value="{{ $country->id }}" {{ old('country_id', $employee->country_id) == $country->id ? 'selected' : '' }}>{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="city_id">City</label>
-                                    <select name="city_id" id="city_id" class="form-control" required>
-                                        <option value="" selected disabled>Select country first</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="birthdate">Date of Birth</label>
-                                    <input type="date" name="birthdate" class="form-control" id="birthdate" value="{{ old('birthdate', $employee->birthdate) }}" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="address">Address</label>
-                                    <input type="text" name="address" class="form-control" id="address" value="{{ old('address', $employee->address) }}" required>
-                                </div>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-success">Update</button>
-                                <a href="{{ route('employee.index') }}" class="btn btn-danger">Home</a>
-                            </div>
-                        </form>
+                    <div class="col-md-4">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" name="apellido" class="form-control" id="apellido" value="{{ old('apellido', $empleado->apellido) }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="numero_documento" class="form-label">Número de Documento</label>
+                        <input type="text" name="numero_documento" class="form-control" id="numero_documento" value="{{ old('numero_documento', $empleado->numero_documento) }}" required>
                     </div>
                 </div>
-            </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="telefono" class="form-label">Teléfono o Celular</label>
+                        <input type="text" name="telefono" class="form-control" id="telefono" value="{{ old('telefono', $empleado->telefono) }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <input type="date" name="fecha_nacimiento" class="form-control" id="fecha_nacimiento" value="{{ old('fecha_nacimiento', $empleado->fecha_nacimiento) }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="correo" class="form-label">Correo Electrónico</label>
+                        <input type="email" name="correo" class="form-control" id="correo" value="{{ old('correo', $empleado->correo) }}" required>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" name="direccion" class="form-control" id="direccion" value="{{ old('direccion', $empleado->direccion) }}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="pais_id" class="form-label mb-0">País</label>
+                        <select name="pais_id" id="pais_id" class="form-control" required>
+                            <option value="" selected disabled>Selecciona un país</option>
+                            @foreach($paises as $pais)
+                                <option value="{{ $pais->id }}" {{ old('pais_id', $empleado->pais_id) == $pais->id ? 'selected' : '' }}>{{ $pais->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="ciudad_id" class="form-label mb-0">Ciudad</label>
+                        <select name="ciudad_id" id="ciudad_id" class="form-control" required>
+                            <option value="" disabled>Selecciona una ciudad</option>
+                            @foreach($ciudades as $ciudad)
+                                <option value="{{ $ciudad->id }}" {{ old('ciudad_id', $empleado->ciudad_id) == $ciudad->id ? 'selected' : '' }}>
+                                    {{ $ciudad->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-8 mx-auto">
+                        <label for="departamento_id" class="form-label mb-0">Departamento</label>
+                        <select name="departamento_id" id="departamento_id" class="form-control" required>
+                            <option value="" selected disabled>Selecciona un departamento</option>
+                            @foreach($departamentos as $departamento)
+                                <option value="{{ $departamento->id }}" {{ old('departamento_id', $empleado->departamento_id) == $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2"><i class="fas fa-save me-1"></i>Actualizar</button>
+                    <a href="{{ route('empleado.indice') }}" class="btn btn-secondary px-4"><i class="fas fa-home me-1"></i>Inicio</a>
+                </div>
+            </form>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('#country_id').change(function() {
-                var countryId = $(this).val();
-
-                if (countryId) {
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ url('/getCities') }}/" + countryId,
-                        success: function(response) {
-                            $('#city_id').html(response);
-
-                            // Preseleccionar la ciudad actual
-                            var currentCityId = "{{ old('city_id', $employee->city_id) }}";
-                            $('#city_id').val(currentCityId);
-                        }
-                    });
-                } else {
-                    $('#city_id').html('<option value="" selected disabled>Select a country first</option>');
-                }
-            });
-
-            // Inicializar el select de ciudades si ya se ha seleccionado un país
-            var initialCountryId = "{{ old('country_id', $employee->country_id) }}";
-            if (initialCountryId) {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ url('/getCities') }}/" + initialCountryId,
-                    success: function(response) {
-                        $('#city_id').html(response);
-
-                        // Preseleccionar la ciudad actual
-                        var currentCityId = "{{ old('city_id', $employee->city_id) }}";
-                        $('#city_id').val(currentCityId);
-                    }
-                });
-            }
-
-            // Eliminar el manejo de campo de contraseña ya que no se utiliza
-        });
-    </script>
-
+</div>
 @endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var paisSelect = document.getElementById('pais_id');
+    var ciudadSelect = document.getElementById('ciudad_id');
+    if (paisSelect && ciudadSelect) {
+        paisSelect.addEventListener('change', function() {
+            var paisId = this.value;
+            if (paisId) {
+                fetch(`{{ url('/obtenerCiudades') }}/${paisId}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        ciudadSelect.innerHTML = html;
+                    })
+                    .catch(() => {
+                        ciudadSelect.innerHTML = '<option value="" selected disabled>Error al cargar ciudades</option>';
+                    });
+            } else {
+                ciudadSelect.innerHTML = '<option value="" selected disabled>Selecciona primero un país</option>';
+            }
+        });
+    }
+});
+</script>
+

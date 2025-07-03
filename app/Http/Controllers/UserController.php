@@ -13,11 +13,26 @@ class UserController extends Controller
         // Este middleware asegura que solo los usuarios autenticados accedan a este controlador
         $this->middleware('auth');
     }
-    
+
     // Mostrar la lista de usuarios
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10); // Por ejemplo, 10 usuarios por página
+        $query = User::query();
+
+        if ($request->filled('filtro_id')) {
+            $query->where('id', $request->input('filtro_id'));
+        }
+        if ($request->filled('filtro_nombre')) {
+            $query->where('first_name', 'like', '%' . $request->input('filtro_nombre') . '%');
+        }
+        if ($request->filled('filtro_apellido')) {
+            $query->where('last_name', 'like', '%' . $request->input('filtro_apellido') . '%');
+        }
+        if ($request->filled('filtro_documento')) {
+            $query->where('document_number', 'like', '%' . $request->input('filtro_documento') . '%');
+        }
+
+        $users = $query->paginate(10);
         return view('user.index', compact('users'));
     }
 

@@ -1,128 +1,136 @@
 @extends('layouts.partials.dashboard')
 
 @section('content')
-    <div class="container">
-        <h2 class="text-center mb-4">Administrative Menu</h2>
-
-        <!-- Mensajes de éxito o error -->
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <!-- Fila para el formulario de importación y los filtros -->
-        <div class="row mb-4">
-            
-            <!-- Formulario de filtros -->
-            <div class="col-md-12">
-                <form method="GET" action="{{ route('employee.index') }}">
-                    <div class="row mb-4">
-                        <!-- Botones de acción -->
-                        <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-filter"></i> Filter
-                            </button>
-                            <a href="{{ route('employee.index') }}" class="btn btn-secondary">
-                                <i class="fa fa-times"></i> Clear filter
-                            </a>
-                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">
-                                <i class="fa fa-upload"></i> Import Employees
-                            </button>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-md-12">
+            <div class="card shadow-sm border-0 mt-4">
+                <div class="card-header bg-info text-white d-flex align-items-center justify-content-between">
+                    <h3 class="mb-0"><i class="fas fa-users me-2"></i>Listado de Empleados</h3>
+                    <a href="{{ route('empleado.crear') }}" class="btn btn-success"><i class="fas fa-user-plus me-1"></i>Nuevo Empleado</a>
+                </div>
+                <div class="card-body">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
                         </div>
-                    </div>
-
-                    <div class="row mb-4">
-                        <!-- Filtro por ID de empleado -->
-                        <div class="col-md-3 mb-2">
-                            <input type="text" class="form-control" placeholder="Search by employee ID" name="employee_id" value="{{ request()->employee_id }}">
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
                         </div>
-
-                        <!-- Filtro por nombre -->
-                        <div class="col-md-3 mb-2">
-                            <input type="text" class="form-control" placeholder="Search by first name" name="first_name" value="{{ request()->first_name }}">
+                    @endif
+                    <form method="GET" action="{{ route('empleado.indice') }}" class="mb-3">
+                        <div class="row g-2 align-items-end justify-content-center filtros-empleados">
+                            <div class="col">
+                                <label for="empleado_id" class="form-label small">ID Empleado</label>
+                                <input type="text" class="form-control" placeholder="ID de empleado" name="empleado_id" id="empleado_id" value="{{ request()->empleado_id }}">
+                            </div>
+                            <div class="col">
+                                <label for="nombre" class="form-label small">Nombre</label>
+                                <input type="text" class="form-control" placeholder="Nombre" name="nombre" id="nombre" value="{{ request()->nombre }}">
+                            </div>
+                            <div class="col">
+                                <label for="apellido" class="form-label small">Apellido</label>
+                                <input type="text" class="form-control" placeholder="Apellido" name="apellido" id="apellido" value="{{ request()->apellido }}">
+                            </div>
+                            <div class="col">
+                                <label for="departamento" class="form-label small">Departamento</label>
+                                <select class="form-select" name="departamento" id="departamento">
+                                    <option value="">Todos los departamentos</option>
+                                    @foreach($departamentos as $departamento)
+                                        <option value="{{ $departamento->id }}" {{ request()->departamento == $departamento->id ? 'selected' : '' }}>{{ $departamento->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto" style="min-width: 140px;">
+                                <div class="d-flex flex-column">
+                                    <label for="estado" class="form-label small mb-1">Estado</label>
+                                    <select class="form-select" name="estado" id="estado">
+                                        <option value="" {{ request()->estado === null || request()->estado === '' ? 'selected' : '' }}>Todos</option>
+                                        <option value="true" {{ request()->estado === 'true' ? 'selected' : '' }}>Activo</option>
+                                        <option value="false" {{ request()->estado === 'false' ? 'selected' : '' }}>Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-auto d-grid align-items-center">
+                                <label class="form-label small" style="visibility:hidden;">Buscar</label>
+                                <button type="submit" class="btn btn-primary" style="height: 38px;"><i class="fas fa-search"></i></button>
+                            </div>
                         </div>
-
-                        <!-- Filtro por apellido -->
-                        <div class="col-md-3 mb-2">
-                            <input type="text" class="form-control" placeholder="Search by last name" name="last_name" value="{{ request()->last_name }}">
-                        </div>
-
-                        <!-- Filtro por departamento -->
-                        <div class="col-md-3 mb-2">
-                            <select class="form-control" name="department">
-                                <option value="">Filter by department</option>
-                                @foreach($departments as $department)
-                                    <option value="{{ $department->id }}" {{ request()->department == $department->id ? 'selected' : '' }}>
-                                        {{ $department->name }}
-                                    </option>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle table-bordered mb-0 listado-empleados-table">
+                            <thead class="table-info">
+                                <tr>
+                                    <th class="text-center">ID Empleado</th>
+                                    <th class="text-start">Nombre</th>
+                                    <th class="text-start">Apellido</th>
+                                    <th class="text-start">Departamento</th>
+                                    <th class="text-center">Total Accesos</th>
+                                    <th class="text-center">Estado</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($empleados as $empleado)
+                                    <tr>
+                                        <td class="text-center">{{ $empleado->id }}</td>
+                                        <td class="text-start">{{ $empleado->first_name }}</td>
+                                        <td class="text-start">{{ $empleado->last_name }}</td>
+                                        <td class="text-start">{{ $empleado->departamento ? $empleado->departamento->nombre : 'N/A' }}</td>
+                                        <td class="text-center">{{ $empleado->registros_inicio_sesion_count ?? 0 }}</td>
+                                        <td class="text-center">
+                                            <span class="badge {{ $empleado->is_active ? 'bg-success' : 'bg-secondary' }}">
+                                                {{ $empleado->is_active ? 'Habilitado' : 'Deshabilitado' }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('empleado.editar', ['empleado' => $empleado]) }}" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
+                                            @if($empleado->is_active)
+                                                <form action="{{ route('empleado.alternarEstado', ['empleado' => $empleado]) }}" method="POST" style="display:inline-block;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-warning btn-sm me-1"
+                                                            title="Deshabilitar"
+                                                            onclick="return confirm('¿Estás seguro de deshabilitar este empleado?')">
+                                                        <i class="fas fa-user-slash"></i>
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <form action="{{ route('empleado.alternarEstado', ['empleado' => $empleado]) }}" method="POST" style="display:inline-block;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-success btn-sm me-1"
+                                                            title="Reactivar"
+                                                            onclick="return confirm('¿Estás seguro de reactivar este empleado?')">
+                                                        <i class="fas fa-user-check"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                            <button type="button" class="btn btn-info btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#historyModal-{{ $empleado->id }}"
+                                                    data-employee-id="{{ $empleado->id }}"
+                                                    title="Historial">
+                                                <i class="fas fa-history"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </select>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-                </form>
+                    <div class="d-flex justify-content-center mt-3">
+                        {{ $empleados->links() }}
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Tabla de empleados -->
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Employee ID</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Department</th>
-                    <th>Total Access</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($employees as $employee)
-                    <tr>
-                        <td>{{ $employee->id }}</td>
-                        <td>{{ $employee->first_name }}</td>
-                        <td>{{ $employee->last_name }}</td>
-                        <td>{{ $employee->departament ? $employee->departament->name : 'N/A' }}</td>
-                        <td>{{ $employee->login_logs_count }}</td> <!-- Total de accesos -->
-                        <td>
-                            <!-- Mostrar Enable o Disable según el estado -->
-                            {{ $employee->is_active ? 'Enable' : 'Disable' }}
-                        </td>
-                        <td>
-                            <a href="{{ route('employee.edit', ['employee' => $employee]) }}" class="btn btn-primary btn-sm">Update</a>
-                             <!-- Botón dinámico según el estado del empleado -->
-                            <form action="{{ route('employee.toggleStatus', ['employee' => $employee]) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('PATCH')
-                                @if($employee->is_active)
-                                    <button type="submit" class="btn btn-sm btn-secondary">Disable</button>
-                                @else
-                                    <button type="submit" class="btn btn-sm btn-success">Enable</button>
-                                @endif
-                            </form>
-                            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#historyModal-{{ $employee->id }}" data-employee-id="{{ $employee->id }}">History</button>
-                            <form action="{{ route('employee.destroy', ['employee' => $employee]) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <!-- Modal Imports -->
-        @include('components.modalEmployeImport')
-        <!-- Modal History -->
-        @include('components.modalEmployeHistory')
-        
-        <script src="{{ asset('js/employee.js') }}"></script>
+<!-- Incluir el modal de historial -->
+@include('components.modalEmployeHistory')
 
 @endsection

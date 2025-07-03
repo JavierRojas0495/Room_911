@@ -1,37 +1,29 @@
-<div class="sidebar">
-    <div class="sidebar-header">
-        All Modules
-        <button class="sidebar-toggle">
-            <i class="fas fa-chevron-left"></i>
-        </button>
+<nav id="sidebar" class="sidebar bg-dark shadow-sm">
+    <div class="sidebar-header d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+        <span class="fw-bold text-white">Módulos</span>
     </div>
-
-    <ul class="modules-list">
-        <!-- Opciones -->
-        <li class="module">
-            <a href="#" class="module-toggle" data-toggle="collapse" data-target="#submenu1" aria-expanded="false" aria-controls="submenu1">
-                <i class="fas fa-address-book	"></i> <span>Module Employee</span>
+    <ul class="modules-list nav flex-column mt-3">
+        <li class="nav-item mb-2">
+            <a class="sidebar-link d-flex align-items-center w-100" href="{{ route('empleado.crear') }}">
+                <i class="fas fa-user-plus me-2"></i> Crear Empleado
             </a>
-            <ul class="submodules-list collapse" id="submenu1">
-                <li><a href="{{ route('employee.create') }}">
-                    <i class="fas fa-user-plus"></i> Create Employee
-                </a></li>
-                <li><a href="{{ route('employee.index') }}">
-                    <i class="fas fa-list"></i> List Employee
-                </a></li>
-            </ul>
         </li>
-
-        <li class="module">
-            <a href="#" class="module-toggle" data-toggle="collapse" data-target="#submenu2" aria-expanded="false" aria-controls="submenu2">
-                <i class="fas fa-users"></i> <span>Module Users Admin</span>
+        <li class="nav-item mb-2">
+            <a class="sidebar-link d-flex align-items-center w-100" href="{{ route('empleado.indice') }}">
+                <i class="fas fa-list me-2"></i> Listar Empleados
             </a>
-            <ul class="submodules-list collapse" id="submenu2">
-                <li> <a href="{{ route('user.create') }}">
-                <i class="fas fa-user-plus"></i> Create Admin</a></li>
-                <li><a href="{{ route('user.index') }}">
-                <i class="fas fa-list"></i> List Admin</a></li>
-            </ul>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="sidebar-link d-flex align-items-center w-100" href="{{ route('user.create') }}">
+                <i class="fas fa-user-plus me-2"></i> Crear Admin
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="sidebar-link d-flex align-items-center w-100" href="{{ route('user.index') }}">
+                <i class="fas fa-list me-2"></i> Listar Admin
+            </a>
         </li>
     </ul>
-</div>
+</nav>
+<!-- Overlay para móvil -->
+<div id="sidebarOverlay" class="d-md-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" style="display:none; z-index:1040;"></div>

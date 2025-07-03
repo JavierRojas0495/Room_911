@@ -3,25 +3,34 @@
     @include('layouts.partials.head')
 
     <body>
-        <!-- Barra Lateral -->
-        <div class="sidebar">
-            @include('layouts.partials.sidebar-left')
-        </div>
-    
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-hide">
-            @include('layouts.partials.navbar')
-        </nav>
-
+        <!-- Barra Lateral y Navbar -->
+        @include('layouts.partials.navbar')
+        @include('layouts.partials.sidebar-left')
         <!-- Contenido Principal -->
-        <div class="" style="margin-top: 40px;">
-            @yield('content')
-        </div>
-
+        <main class="main-content" style="min-height: 100vh; padding-top: 70px;">
+            <div class="container-fluid py-4">
+                @yield('content')
+            </div>
+        </main>
         <!-- Footer -->
-        @include('layouts.partials.footer') 
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        @include('layouts.partials.footer')
+        <!-- Bootstrap 5 Bundle (incluye Popper) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{ asset('js/allFunctions.js') }}"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('button[data-employee-id][title="Historial"]').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    var empleadoId = btn.getAttribute('data-employee-id');
+                    var modalId = 'historyModal-' + empleadoId;
+                    var modalEl = document.getElementById(modalId);
+                    if (modalEl) {
+                        var modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+                    }
+                });
+            });
+        });
+        </script>
     </body>
 </html>

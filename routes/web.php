@@ -18,6 +18,14 @@ Route::get('/', function () {
 });
 require_once __DIR__ . '/login/login.php';
 
+// Ruta de prueba temporal para el historial (sin autenticación)
+Route::get('/test-historial/{empleadoId}', function($empleadoId) {
+    return view('employee.history_table', [
+        'registros' => \App\Models\RegistroInicioSesion::where('employee_id', $empleadoId)->get(),
+        'fecha_inicio' => null,
+        'fecha_fin' => null
+    ]);
+});
 
 Route::middleware('auth')->group(function () {
     require_once __DIR__ . '/user/user.php';
