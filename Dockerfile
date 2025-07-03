@@ -39,6 +39,13 @@ RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
+# Instalar Node.js y npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
+# Instalar dependencias de npm y compilar assets
+RUN npm install && npm run build
+
 # Exponer el puerto 80
 EXPOSE 80
 
