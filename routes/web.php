@@ -14,24 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    try {
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Room 911 - Sistema funcionando correctamente!',
-            'app_name' => config('app.name'),
-            'app_env' => config('app.env'),
-            'app_debug' => config('app.debug'),
-            'database_connection' => config('database.default'),
-            'timestamp' => now()
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $e->getMessage(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine()
-        ], 500);
-    }
+    return 'Hello World - Laravel Basic Test';
 });
 
 Route::get('/test', function () {
