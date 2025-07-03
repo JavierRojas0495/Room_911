@@ -14,67 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    try {
-        // Verificar si Laravel puede cargar la configuración básica
-        $appName = config('app.name');
-        $appKey = config('app.key');
-        $appEnv = config('app.env');
-
-        // Verificar si hay errores en los logs
-        $logFile = storage_path('logs/laravel.log');
-        $recentLogs = '';
-        if (file_exists($logFile)) {
-            $recentLogs = file_get_contents($logFile);
-            if (strlen($recentLogs) > 1000) {
-                $recentLogs = substr($recentLogs, -1000);
-            }
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Laravel está funcionando correctamente!',
-            'app_name' => $appName,
-            'app_key' => $appKey ? 'Set' : 'Not Set',
-            'app_env' => $appEnv,
-            'timestamp' => now()->toISOString(),
-            'recent_logs' => $recentLogs
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $e->getMessage(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'trace' => $e->getTraceAsString()
-        ], 500);
-    }
+    return view('login/login');
 });
 
-Route::get('/test', function () {
-    return 'Test simple - Laravel funciona!';
-});
 
-Route::get('/phpinfo', function () {
-    ob_start();
-    phpinfo();
-    $phpinfo = ob_get_clean();
-    return response($phpinfo, 200, ['Content-Type' => 'text/html']);
-});
-
-Route::get('/env-check', function () {
-    return response()->json([
-        'APP_NAME' => env('APP_NAME'),
-        'APP_ENV' => env('APP_ENV'),
-        'APP_KEY' => env('APP_KEY') ? 'Set' : 'Not Set',
-        'APP_DEBUG' => env('APP_DEBUG'),
-        'APP_URL' => env('APP_URL'),
-        'DB_CONNECTION' => env('DB_CONNECTION'),
-        'DB_HOST' => env('DB_HOST'),
-        'DB_DATABASE' => env('DB_DATABASE'),
-        'DB_USERNAME' => env('DB_USERNAME'),
-        'DB_PASSWORD' => env('DB_PASSWORD') ? 'Set' : 'Not Set'
-    ]);
-});
 
 Route::get('/login', function () {
     return view('login/login');
