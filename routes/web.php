@@ -14,7 +14,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return 'Hello World - Laravel Basic Test';
+    try {
+        // Verificar si Laravel puede cargar la configuración básica
+        $appName = config('app.name');
+        $appKey = config('app.key');
+        $appEnv = config('app.env');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Laravel está funcionando correctamente!',
+            'app_name' => $appName,
+            'app_key' => $appKey ? 'Set' : 'Not Set',
+            'app_env' => $appEnv,
+            'timestamp' => now()->toISOString()
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'trace' => $e->getTraceAsString()
+        ], 500);
+    }
 });
 
 Route::get('/test', function () {

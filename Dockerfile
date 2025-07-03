@@ -23,36 +23,7 @@ COPY . .
 # Eliminar vendor si existe (por si acaso)
 RUN rm -rf vendor
 
-# Crear archivo .env básico si no existe
-RUN if [ ! -f .env ]; then \
-    echo "APP_NAME=\"Room 911\"" > .env && \
-    echo "APP_ENV=local" >> .env && \
-    echo "APP_KEY=" >> .env && \
-    echo "APP_DEBUG=true" >> .env && \
-    echo "APP_URL=http://localhost" >> .env && \
-    echo "LOG_CHANNEL=stack" >> .env && \
-    echo "LOG_LEVEL=debug" >> .env && \
-    echo "DB_CONNECTION=pgsql" >> .env && \
-    echo "DB_HOST=127.0.0.1" >> .env && \
-    echo "DB_PORT=5432" >> .env && \
-    echo "DB_DATABASE=room_911" >> .env && \
-    echo "DB_USERNAME=postgres" >> .env && \
-    echo "DB_PASSWORD=" >> .env && \
-    echo "BROADCAST_DRIVER=log" >> .env && \
-    echo "CACHE_DRIVER=file" >> .env && \
-    echo "FILESYSTEM_DISK=local" >> .env && \
-    echo "QUEUE_CONNECTION=sync" >> .env && \
-    echo "SESSION_DRIVER=file" >> .env && \
-    echo "SESSION_LIFETIME=120" >> .env && \
-    echo "MAIL_MAILER=smtp" >> .env && \
-    echo "MAIL_HOST=mailpit" >> .env && \
-    echo "MAIL_PORT=1025" >> .env && \
-    echo "MAIL_USERNAME=null" >> .env && \
-    echo "MAIL_PASSWORD=null" >> .env && \
-    echo "MAIL_ENCRYPTION=null" >> .env && \
-    echo "MAIL_FROM_ADDRESS=\"hello@example.com\"" >> .env && \
-    echo "MAIL_FROM_NAME=\"\${APP_NAME}\"" >> .env; \
-fi
+# No crear archivo .env - Render manejará las variables de entorno
 
 # Cambiar DocumentRoot a /public
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
