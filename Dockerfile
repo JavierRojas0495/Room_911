@@ -1,10 +1,12 @@
 # Imagen base oficial de PHP con Apache
 FROM php:8.2-apache
 
-# Instalar dependencias del sistema
+# Instalar dependencias del sistema y extensiones PHP necesarias para Laravel
 RUN apt-get update && apt-get install -y \
     zip unzip git curl libzip-dev libonig-dev libxml2-dev libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql zip
+    libpng-dev libjpeg-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_pgsql zip gd
 
 # Habilitar mod_rewrite de Apache
 RUN a2enmod rewrite
@@ -18,6 +20,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copiar archivos del proyecto
 COPY . .
 
+# Copiar archivo .env.example como .env si no existe
+RUN if [ ! -f .env ]; then cp .env.example .env; fi
+
 # Cambiar DocumentRoot a /public
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
@@ -25,8 +30,8 @@ RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Instalar dependencias de Laravel
-RUN composer install --no-dev --optimize-autoloader
+# Instalar dependencias de Laravel (ignorando requisitos de plataforma)
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # Copiar y dar permisos al script de entrada
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
