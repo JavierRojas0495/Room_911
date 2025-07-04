@@ -21,6 +21,7 @@
         <script src="{{ mix('js/app.js') }}"></script>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar modales de historial
             document.querySelectorAll('button[data-employee-id][title="Historial"]').forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
                     var empleadoId = btn.getAttribute('data-employee-id');
@@ -31,6 +32,33 @@
                         modal.show();
                     }
                 });
+            });
+
+            // Mejorar experiencia en móvil para formularios
+            if (window.innerWidth <= 768) {
+                const formInputs = document.querySelectorAll('input, select, textarea');
+                formInputs.forEach(function(input) {
+                    input.addEventListener('focus', function() {
+                        // Scroll suave al input en móvil
+                        setTimeout(function() {
+                            input.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                                inline: 'nearest'
+                            });
+                        }, 300);
+                    });
+                });
+            }
+
+            // Mejorar experiencia de tablas en móvil
+            const tables = document.querySelectorAll('.table-responsive');
+            tables.forEach(function(table) {
+                if (window.innerWidth <= 768) {
+                    // Agregar indicador de scroll horizontal
+                    table.style.overflowX = 'auto';
+                    table.style.webkitOverflowScrolling = 'touch';
+                }
             });
         });
         </script>

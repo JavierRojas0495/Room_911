@@ -172,27 +172,6 @@ body {
     margin-right: 8px;
 }
 
-@media (max-width: 767.98px) {
-    .sidebar {
-        width: 90vw;
-        min-width: 220px;
-        max-width: 320px;
-        border-radius: 0 12px 12px 0;
-    }
-
-    .sidebar .sidebar-header {
-        padding: 18px 16px 14px 16px;
-    }
-
-    .sidebar .sidebar-toggle {
-        padding: 14px 16px 14px 16px;
-    }
-
-    .sidebar .submenu .nav-link {
-        padding: 10px 12px 10px 36px;
-    }
-}
-
 /* Sidebar Collapse */
 .sidebar.sidebar-collapse {
     width: 0;
@@ -200,95 +179,103 @@ body {
 }
 
 .sidebar.sidebar-collapse .sidebar-header,
-.sidebar.sidebar-collapse .module {
+.sidebar.sidebar-collapse .modules-list {
     display: none;
 }
 
 .sidebar.sidebar-collapse+.container-fluid,
-.sidebar.sidebar-collapse+.navbar,
-.sidebar.sidebar-collapse+.footer {
+.sidebar.sidebar-collapse~.main-content {
     margin-left: 0;
-    left: 0;
-    width: 100%;
 }
 
-/* Sidebar Toggle */
+/* Estilos para el botón de toggle del sidebar */
 .sidebar-toggle {
-    position: fixed;
-    top: 10px;
-    left: 250px;
-    width: 30px;
-    height: 30px;
+    background: none;
     border: none;
-    background: #333;
-    color: #fff;
+    outline: none;
+    color: #fff !important;
+    width: 100%;
+    text-align: left;
+    padding: 16px 22px 16px 22px;
+    font-size: 1.08rem;
+    font-weight: 700;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.18s, color 0.18s;
     cursor: pointer;
-    z-index: 1002;
-    transition: left 0.3s;
+    box-shadow: none;
+    letter-spacing: 0.5px;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .sidebar-toggle i {
-    font-size: 20px;
+    font-size: 1.1em;
 }
 
 .sidebar.sidebar-collapse .sidebar-toggle {
-    left: 0;
+    display: none;
 }
 
-/* Modules */
+/* Estilos para la lista de módulos */
 .modules-list,
 .submodules-list {
     list-style: none;
-    padding-left: 0;
-    margin-top: 20px;
+    padding: 0;
+    margin: 0;
 }
 
 .module a {
     color: #fff;
     text-decoration: none;
+    padding: 12px 20px;
     display: block;
-    padding: 10px;
-    border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 .module a:hover {
-    background-color: #495057;
+    background-color: #1a8cff;
 }
 
 .submodules-list {
+    background-color: #2c3136;
     padding-left: 20px;
-    margin-top: 5px;
 }
 
 .submodules-list li a {
-    color: #ddd;
-    padding: 5px 10px;
+    padding: 8px 20px;
+    font-size: 0.9em;
 }
 
 .submodules-list li a:hover {
-    background-color: #6c757d;
+    background-color: #1a8cff;
 }
 
 /* Footer */
 .footer {
-    --background-color: #1A1A1A;
+    background: rgba(44, 62, 80, 0.18);
     color: #fff;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    left: 240px;
-    width: calc(100% - 240px);
     text-align: center;
-    z-index: 9999;
-    transition: left 0.3s, width 0.3s;
+    padding: 8px 0 4px 0;
+    font-size: 0.92rem;
+    position: fixed;
+    bottom: 2px;
+    width: 100%;
+    z-index: 1030;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(2px);
 }
 
-/* Responsiveness */
+/* Media Queries para responsive */
 @media (max-width: 991.98px) {
-
     .navbar,
-    .footer {
+    .sidebar {
         width: 100%;
         left: 0;
     }
@@ -296,21 +283,19 @@ body {
     .main-content {
         margin-left: 0;
         padding-top: 60px;
-        min-height: calc(100vh - 60px);
     }
 }
 
-/* Estilos para el dropdown del navbar */
 .navbar .dropdown-menu {
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, .15);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .175);
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .navbar .dropdown-item {
-    color: #212529;
+    color: #495057;
     padding: 0.5rem 1rem;
-    transition: background-color 0.15s ease-in-out;
+    transition: background-color 0.3s;
 }
 
 .navbar .dropdown-item:hover {
@@ -319,9 +304,10 @@ body {
 
 .navbar .dropdown-item.text-danger:hover {
     background-color: #f8d7da;
+    color: #721c24;
 }
 
-/* Mejoras para el sidebar en móviles */
+/* Media Queries para móvil */
 @media (max-width: 767.98px) {
     .sidebar {
         transform: translateX(-100%);
@@ -334,6 +320,42 @@ body {
 
     #sidebarOverlay {
         z-index: 1040;
+    }
+
+    .navbar {
+        width: 100%;
+        left: 0;
+        padding: 0 10px;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .container-fluid {
+        padding: 10px;
+        margin-left: 0;
+    }
+
+    .footer {
+        padding: 4px 0 2px 0;
+        font-size: 0.82rem;
+        bottom: 0;
+    }
+    .main-content {
+        padding-bottom: 60px;
+    }
+    .card.formulario-empleado {
+        margin-bottom: 60px;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-content {
+        padding-bottom: 0 !important;
+    }
+    .card.formulario-empleado {
+        margin-bottom: 0 !important;
     }
 }
 
@@ -356,6 +378,7 @@ body {
 
 @media (max-width: 767.98px) {
     .main-content {
+        margin-left: 0;
         padding-top: 60px;
         min-height: calc(100vh - 60px);
     }
@@ -523,37 +546,126 @@ body {
 #numero_documento.form-control {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23138496" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="%23138496" stroke-width="2"/><rect x="2" y="9" width="20" height="2" fill="%23138496"/><rect x="6" y="15" width="6" height="2" rx="1" fill="%23138496"/></svg>');
     background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: 22px 22px;
-    padding-left: 2.5em !important;
-    margin-top: 0 !important;
+    background-position: 14px center;
+    background-size: 20px 20px;
+    padding-left: 44px !important;
 }
 
 #telefono.form-control {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23138496" viewBox="0 0 16 16"><path d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5zm3 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23138496" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>');
     background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: 18px 18px;
-    padding-left: 2.2em !important;
-    margin-top: 0 !important;
+    background-position: 14px center;
+    background-size: 20px 20px;
+    padding-left: 44px !important;
 }
 
 #direccion.form-control {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23138496" viewBox="0 0 16 16"><path d="M8 0a5.53 5.53 0 0 0-5.5 5.5c0 4.2 5.5 10.5 5.5 10.5s5.5-6.3 5.5-10.5A5.53 5.53 0 0 0 8 0zm0 8a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23138496" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>');
     background-repeat: no-repeat;
-    background-position: 10px center;
-    background-size: 18px 18px;
-    padding-left: 2.2em !important;
+    background-position: 14px center;
+    background-size: 20px 20px;
+    padding-left: 44px !important;
     margin-top: -7px !important;
 }
 
+/* Media Queries para formularios en tablets */
 @media (max-width: 991.98px) {
     .card.formulario-empleado {
-        max-width: 99vw;
+        max-width: 95vw;
+        margin: 0 10px;
     }
 
     .card.formulario-empleado .card-body {
-        padding: 18px 6px 12px 6px;
+        padding: 30px 20px 20px 20px;
+    }
+
+    .card.formulario-empleado .card-header {
+        font-size: 1.5rem;
+        padding: 20px 0 15px 0;
+    }
+
+    .card.formulario-empleado .btn {
+        min-width: 150px;
+        height: 50px;
+        font-size: 1.1rem;
+        padding: 0 30px;
+    }
+
+    .card.formulario-empleado .btn+.btn {
+        margin-left: 15px;
+    }
+}
+
+/* Media Queries para formularios en móvil */
+@media (max-width: 767.98px) {
+    .form-card-center {
+        padding-top: 15px;
+        min-height: auto;
+    }
+
+    .card.formulario-empleado {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 15px;
+    }
+
+    .card.formulario-empleado .card-header {
+        font-size: 1.3rem;
+        padding: 15px 0 10px 0;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .card.formulario-empleado .card-body {
+        padding: 20px 15px 15px 15px;
+    }
+
+    .card.formulario-empleado .form-label {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .card.formulario-empleado .form-control,
+    .card.formulario-empleado .form-select {
+        height: 45px !important;
+        font-size: 1rem;
+        border-radius: 10px !important;
+        padding: 8px 12px 8px 40px;
+        background-size: 18px 18px;
+        background-position: 12px center;
+    }
+
+    .card.formulario-empleado .btn {
+        min-width: 120px;
+        height: 45px;
+        font-size: 1rem;
+        padding: 0 20px;
+        border-radius: 12px;
+    }
+
+    .card.formulario-empleado .btn+.btn {
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    .card.formulario-empleado .row.g-3 {
+        margin-bottom: 15px;
+    }
+
+    /* Ajustar iconos en móvil */
+    #nombre.form-control,
+    #correo.form-control,
+    #numero_documento.form-control,
+    #telefono.form-control,
+    #direccion.form-control {
+        padding-left: 40px !important;
+        background-position: 12px center;
+        background-size: 18px 18px;
+    }
+
+    #apellido.form-control {
+        padding-left: 2em !important;
+        background-position: 8px center;
+        background-size: 16px 16px;
     }
 }
 
@@ -597,15 +709,35 @@ body {
     padding: 20px;
 }
 
+/* Media Queries para tablas en móvil */
 @media (max-width: 767.98px) {
-
     .listado-empleados-table th,
     .listado-empleados-table td {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        padding: 8px 4px;
     }
 
     .card .card-body {
-        padding: 15px;
+        padding: 15px 10px;
+    }
+
+    /* Hacer la tabla responsive */
+    .table-responsive {
+        border: none;
+    }
+
+    .listado-empleados-table {
+        font-size: 0.75rem;
+    }
+
+    .listado-empleados-table .btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+
+    .listado-empleados-table .badge {
+        font-size: 0.75rem;
+        padding: 4px 8px;
     }
 }
 
@@ -685,6 +817,44 @@ body {
 .filtros-empleados .col:not(:last-child),
 .filtros-empleados .col-auto:not(:last-child) {
     margin-right: 8px;
+}
+
+/* Media Queries para filtros en móvil */
+@media (max-width: 767.98px) {
+    .filtros-empleados {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filtros-empleados .row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filtros-empleados .col,
+    .filtros-empleados .col-auto {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .filtros-empleados .form-control,
+    .filtros-empleados .form-select {
+        min-width: 100%;
+        height: 42px !important;
+        font-size: 0.9rem;
+    }
+
+    .filtros-empleados .btn {
+        height: 42px !important;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .filtros-empleados .form-label {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+    }
 }
 
 /* --- TABLA DE EMPLEADOS --- */
@@ -824,27 +994,152 @@ body {
 /* --- ALINEACIÓN PERFECTA DE DIRECCIÓN, PAÍS Y CIUDAD --- */
 .card.formulario-empleado .row.g-3.campos-ubicacion {
     display: flex;
+    flex-wrap: wrap;
     gap: 18px;
 }
-
-.card.formulario-empleado .row.g-3.campos-ubicacion>.col-md-4 {
-    display: block;
-    flex-direction: unset;
-    justify-content: unset;
-    height: unset;
-    max-width: unset;
-    min-width: unset;
+.card.formulario-empleado .row.g-3.campos-ubicacion > .col-12,
+.card.formulario-empleado .row.g-3.campos-ubicacion > .col-md-4 {
+    flex: 1 1 0;
+    min-width: 220px;
+    max-width: 32%;
+    margin-bottom: 0;
+}
+@media (max-width: 991.98px) {
+    .card.formulario-empleado .row.g-3.campos-ubicacion {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .card.formulario-empleado .row.g-3.campos-ubicacion > .col-12,
+    .card.formulario-empleado .row.g-3.campos-ubicacion > .col-md-4 {
+        max-width: 100%;
+        min-width: 0;
+        margin-bottom: 10px;
+    }
 }
 
-.card.formulario-empleado .row.g-3.campos-ubicacion .form-control,
-.card.formulario-empleado .row.g-3.campos-ubicacion .form-select {
-    height: 48px !important;
-    font-size: 1.13rem;
-    border-radius: 13px !important;
-    padding: 10px 16px;
-    line-height: 1.5;
-    box-sizing: border-box;
-    vertical-align: middle;
-    background-image: none !important;
-    padding-left: 16px !important;
+/* Media Queries adicionales para mejorar el responsive */
+@media (max-width: 575.98px) {
+    /* Ajustes para pantallas muy pequeñas */
+    .container-fluid {
+        padding: 5px;
+    }
+
+    .card {
+        margin: 5px 0;
+    }
+
+    .card .card-header {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .card .card-body {
+        padding: 10px;
+    }
+
+    /* Ajustar botones en móvil */
+    .btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .btn-sm {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+
+    /* Mejorar navegación en móvil */
+    .navbar-brand {
+        font-size: 0.9rem;
+    }
+
+    .navbar-brand i {
+        margin-right: 5px;
+    }
+
+    /* Ajustar sidebar en móvil */
+    .sidebar {
+        width: 260px;
+    }
+
+    .sidebar .sidebar-header {
+        padding: 15px 15px 10px 15px;
+        font-size: 1.1rem;
+    }
+
+    .sidebar .sidebar-link {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+
+    /* Ajustar formularios en móvil */
+    .card.formulario-empleado .row.g-3 {
+        margin-bottom: 12px;
+    }
+
+    .card.formulario-empleado .row.g-3 .col-md-4 {
+        margin-bottom: 10px;
+    }
+
+    /* Ajustar filtros en móvil */
+    .filtros-empleados .form-control,
+    .filtros-empleados .form-select {
+        font-size: 0.85rem;
+    }
+
+    /* Ajustar tabla en móvil */
+    .listado-empleados-table {
+        font-size: 0.75rem;
+    }
+
+    .listado-empleados-table th,
+    .listado-empleados-table td {
+        padding: 6px 3px;
+    }
+
+    .listado-empleados-table .btn {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Ajustes para orientación landscape en móvil */
+@media (max-width: 767.98px) and (orientation: landscape) {
+    .form-card-center {
+        padding-top: 10px;
+    }
+
+    .card.formulario-empleado .card-body {
+        padding: 15px 10px;
+    }
+
+    .card.formulario-empleado .row.g-3 {
+        margin-bottom: 10px;
+    }
+}
+
+/* Ajustes para tablets en modo portrait */
+@media (min-width: 768px) and (max-width: 991.98px) and (orientation: portrait) {
+    .card.formulario-empleado {
+        max-width: 90vw;
+    }
+
+    .card.formulario-empleado .card-body {
+        padding: 25px 15px;
+    }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 1200px) {
+    .container-fluid {
+        padding: 30px;
+    }
+
+    .card.formulario-empleado {
+        max-width: 1000px;
+    }
+
+    .card.formulario-empleado .card-body {
+        padding: 60px 80px 50px 80px;
+    }
 }
