@@ -19,15 +19,25 @@ Route::get('/assets/css/{filename}', [AssetController::class, 'serveCss'])->wher
 Route::get('/assets/js/{filename}', [AssetController::class, 'serveJs'])->where('filename', '.*\.js$');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login/login');
 });
-
-require __DIR__.'/auth.php';
 
 Route::get('/login', function () {
     return view('login/login');
 });
-require_once __DIR__ . '/login/login.php';
+
+Route::get('/authorized', function () {
+    return view('login/authorized');
+});
+
+// Rutas de empleados
+require __DIR__.'/employee/employee.php';
+
+// Rutas de usuarios
+require __DIR__.'/user/user.php';
+
+// Rutas de login
+require __DIR__.'/login/login.php';
 
 // Ruta de prueba temporal para el historial (sin autenticación)
 Route::get('/test-historial/{empleadoId}', function($empleadoId) {
@@ -39,7 +49,5 @@ Route::get('/test-historial/{empleadoId}', function($empleadoId) {
 });
 
 Route::middleware('auth')->group(function () {
-    require_once __DIR__ . '/user/user.php';
-    require_once __DIR__ . '/employee/employee.php';
     require_once __DIR__ . '/users/user.php';
 });
