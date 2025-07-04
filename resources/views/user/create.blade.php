@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="form-card-center">
-    <div class="card formulario-empleado shadow-sm border-0">
+    <div class="card formulario-empleado formulario-admin shadow-sm border-0">
         <div class="card-header">
             <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>Crear Administrador</h4>
         </div>

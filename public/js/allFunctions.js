@@ -20,38 +20,87 @@ function initSidebarResponsive() {
     const closeBtn = document.getElementById('sidebarCloseBtn');
 
     if (openBtn && sidebar) {
-        openBtn.addEventListener('click', function() {
+        openBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Agregar clase show al sidebar
             sidebar.classList.add('show');
-            if (overlay) overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+
+            // Mostrar overlay con animación
+            if (overlay) {
+                overlay.style.display = 'block';
+                // Pequeño delay para asegurar que el display:block se aplique antes de la animación
+                setTimeout(() => {
+                    overlay.classList.add('show');
+                }, 10);
+            }
+
+            // Prevenir scroll del body
+            document.body.style.overflow = 'hidden';
+
+            // Enfocar el primer enlace del sidebar para accesibilidad
+            const firstLink = sidebar.querySelector('.sidebar-link');
+            if (firstLink) {
+                setTimeout(() => {
+                    firstLink.focus();
+                }, 300);
+            }
         });
     }
 
     if (closeBtn && sidebar && overlay) {
-        closeBtn.addEventListener('click', function() {
-            sidebar.classList.remove('show');
-            overlay.style.display = 'none';
-            document.body.style.overflow = ''; // Restaurar scroll del body
+        closeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeSidebar();
         });
     }
 
     if (overlay && sidebar) {
-        overlay.addEventListener('click', function() {
-            sidebar.classList.remove('show');
-            overlay.style.display = 'none';
-            document.body.style.overflow = '';
+        overlay.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeSidebar();
         });
+    }
+
+    // Función para cerrar el sidebar
+    function closeSidebar() {
+        // Remover clase show del overlay primero
+        if (overlay) {
+            overlay.classList.remove('show');
+            // Esperar a que termine la animación antes de ocultar
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+        }
+
+        // Remover clase show del sidebar
+        sidebar.classList.remove('show');
+
+        // Restaurar scroll del body
+        document.body.style.overflow = '';
+
+        // Enfocar el botón de abrir para accesibilidad
+        if (openBtn) {
+            setTimeout(() => {
+                openBtn.focus();
+            }, 300);
+        }
     }
 
     // Cierra el sidebar al hacer click en un enlace (solo móvil)
     if (sidebar) {
         const navLinks = sidebar.querySelectorAll('a.nav-link, a.sidebar-link');
         navLinks.forEach(function(link) {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(e) {
+                // Permitir que el enlace funcione normalmente
+                // pero cerrar el sidebar después de un pequeño delay
                 if (window.innerWidth < 768) {
-                    sidebar.classList.remove('show');
-                    if (overlay) overlay.style.display = 'none';
-                    document.body.style.overflow = '';
+                    setTimeout(() => {
+                        closeSidebar();
+                    }, 100);
                 }
             });
         });
@@ -60,11 +109,23 @@ function initSidebarResponsive() {
     // Cerrar sidebar al cambiar tamaño de ventana
     window.addEventListener('resize', function() {
         if (window.innerWidth >= 768 && sidebar) {
-            sidebar.classList.remove('show');
-            if (overlay) overlay.style.display = 'none';
-            document.body.style.overflow = '';
+            closeSidebar();
         }
     });
+
+    // Cerrar sidebar con la tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar && sidebar.classList.contains('show')) {
+            closeSidebar();
+        }
+    });
+
+    // Prevenir que el sidebar se cierre al hacer click dentro de él
+    if (sidebar) {
+        sidebar.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
 }
 
 // Función para mejorar la experiencia en móvil

@@ -9,10 +9,8 @@ body {
 /* Estilos para el contenedor principal */
 .container-fluid {
     --margin-left: 250px;
-    padding: 20px;
-    transition: margin-left 0.3s;
-    margin-bottom: 60px;
-    /* Agrega margen en la parte inferior para espacio para el footer */
+    padding: 10px;
+    margin-left: 0;
 }
 
 /* Navbar */
@@ -310,16 +308,30 @@ body {
 /* Media Queries para móvil */
 @media (max-width: 767.98px) {
     .sidebar {
-        transform: translateX(-100%);
-        width: 280px;
+        width: 85vw;
+        min-width: 220px;
+        max-width: 380px;
+        border-radius: 0 12px 12px 0;
+        z-index: 1051;
+        box-shadow: 2px 0 16px rgba(0,0,0,0.18);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        pointer-events: auto;
+        background: linear-gradient(135deg, #23272b 80%, #2c3136 100%);
     }
-
-    .sidebar.show {
-        transform: translateX(0);
-    }
-
     #sidebarOverlay {
         z-index: 1040;
+        background: rgba(0,0,0,0.35);
+        backdrop-filter: blur(2px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        pointer-events: auto;
     }
 
     .navbar {
@@ -376,11 +388,15 @@ body {
     transition: margin-left 0.3s;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
     .main-content {
         margin-left: 0;
         padding-top: 60px;
         min-height: calc(100vh - 60px);
+    }
+    .card.formulario-empleado {
+        max-width: 100%;
+        margin: 0;
     }
 }
 
@@ -396,6 +412,7 @@ body {
 /* Estilos para el formulario de empleado */
 .card.formulario-empleado {
     max-width: 900px;
+    margin: 0 auto;
     border-radius: 28px;
     background: linear-gradient(135deg, #fafdff 80%, #e9f7fa 100%);
     box-shadow: 0 8px 32px rgba(23, 162, 184, 0.10), 0 1.5px 8px rgba(0, 0, 0, 0.04);
@@ -415,7 +432,7 @@ body {
 }
 
 .card.formulario-empleado .card-body {
-    padding: 54px 60px 38px 60px;
+    padding: 43px 48px 30px 48px;
 }
 
 .card.formulario-empleado .form-label {
@@ -1141,5 +1158,152 @@ body {
 
     .card.formulario-empleado .card-body {
         padding: 60px 80px 50px 80px;
+    }
+}
+
+/* Ajuste para que el contenido principal esté alineado al sidebar y ocupe el espacio disponible */
+@media (min-width: 820px) {
+    .container-fluid, .main-content {
+        margin-left: 240px !important;
+        padding: 32px 32px 32px 32px !important;
+        max-width: 100% !important;
+        width: auto !important;
+        box-sizing: border-box;
+        display: block;
+    }
+    .card.formulario-empleado {
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+        box-shadow: 0 8px 32px rgba(23,162,184,.1),0 1.5px 8px rgba(0,0,0,.04);
+    }
+}
+
+/* En escritorio grande, mantener paddings amplios */
+@media (min-width: 1200px) {
+    .container-fluid, .main-content {
+        padding: 40px 80px 40px 80px !important;
+    }
+    .card.formulario-empleado {
+        max-width: 1100px;
+        margin-left: 0;
+        margin-right: auto;
+    }
+}
+
+/* En móvil, el contenido ocupa el 100% */
+@media (max-width: 819px) {
+    .container-fluid, .main-content {
+        margin-left: 0 !important;
+        padding: 12px 6px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    .card.formulario-empleado {
+        max-width: 100%;
+        margin: 0;
+        width: 100%;
+    }
+}
+
+/* Móvil y tablet (hasta 1024px): sidebar colapsable, contenido 100% ancho */
+@media (max-width: 1024px) {
+    .container-fluid, .main-content {
+        margin-left: 0 !important;
+        padding: 16px 8px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+    .card.formulario-empleado {
+        max-width: 100%;
+        margin: 0;
+        width: 100%;
+    }
+    .navbar {
+        left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+/* Escritorio (desde 1025px): sidebar fijo, contenido centrado y max-width 1100px */
+@media (min-width: 1025px) {
+    .container-fluid, .main-content {
+        margin-left: 240px !important;
+        padding: 40px 32px 40px 32px !important;
+        max-width: 1100px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-right: auto;
+        margin-top: 0;
+        margin-bottom: 0;
+        display: block;
+    }
+    .card.formulario-empleado {
+        margin: 0 auto;
+        max-width: 100%;
+        width: 100%;
+        box-shadow: 0 8px 32px rgba(23,162,184,.1),0 1.5px 8px rgba(0,0,0,.04);
+    }
+    .navbar {
+        left: 240px !important;
+        width: calc(100% - 240px) !important;
+    }
+}
+
+/* --- FORZAR LAYOUT CLÁSICO DE ESCRITORIO Y LIMPIEZA FINAL --- */
+@media (min-width: 992px) {
+    .main-content {
+        margin-left: 240px !important;
+        padding-top: 70px !important;
+        min-height: calc(100vh - 70px) !important;
+        transition: margin-left 0.3s !important;
+    }
+    .card.formulario-admin {
+        max-width: 700px !important;
+    }
+    .card.formulario-empleado {
+        max-width: 900px !important;
+        margin: 0 auto !important;
+        border-radius: 28px !important;
+        background: linear-gradient(135deg, #fafdff 80%, #e9f7fa 100%) !important;
+        box-shadow: 0 8px 32px rgba(23, 162, 184, 0.10), 0 1.5px 8px rgba(0, 0, 0, 0.04) !important;
+        border: 1.5px solid #e3f2fd !important;
+    }
+    .container-fluid {
+        padding: 10px !important;
+        margin-left: 0 !important;
+    }
+}
+
+/* Inputs de admin más compactos y centrados dentro de la card */
+.card.formulario-empleado.admin-form .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card.formulario-empleado.admin-form .form-group,
+.card.formulario-empleado.admin-form .mb-3 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card.formulario-empleado.admin-form .form-control,
+.card.formulario-empleado.admin-form .form-select {
+    max-width: 500px;
+    width: 100%;
+    margin-bottom: 18px;
+}
+.card.formulario-empleado.admin-form .btn {
+    max-width: 500px;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+/* --- FORZAR ANCHO DE ADMIN AL FINAL --- */
+@media (min-width: 992px) {
+    .card.formulario-admin {
+        max-width: 700px !important;
     }
 }
