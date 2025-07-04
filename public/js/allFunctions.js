@@ -1,3 +1,4 @@
+console.log('allFunctions.js cargado correctamente - ' + new Date().toISOString());
 // Función para ajustar la altura del contenido principal (si es necesario)
 function adjustMainContentHeight() {
     const mainContent = document.querySelector('.main-content');
