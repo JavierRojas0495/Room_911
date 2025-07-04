@@ -30,5 +30,8 @@
     <!-- Custom JavaScript -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/allFunctions.js') }}"></script>
+
+    <!-- Script de verificación de assets (temporal) -->
+    <script src="{{ asset('js/asset-checker.js') }}"></script>
 </body>
 </html>
