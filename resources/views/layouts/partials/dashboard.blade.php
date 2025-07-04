@@ -17,7 +17,7 @@
         @include('layouts.partials.footer')
         <!-- Bootstrap 5 Bundle (incluye Popper) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ asset('js/allFunctions.js') }}"></script>
+        <script src="/assets/js/allFunctions.js?v={{ time() }}"></script>
         <script src="{{ mix('js/app.js') }}"></script>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
