@@ -78,14 +78,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="text-center mt-4">
-                    <div class="d-grid d-md-flex gap-2 justify-content-center">
-                        <button type="submit" class="btn btn-success px-4">
-                            <i class="fas fa-save me-1"></i>Guardar
-                        </button>
-                        <a href="{{ route('empleado.indice') }}" class="btn btn-secondary px-4">
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <a href="{{ route('empleado.indice') }}" class="btn btn-secondary w-100 px-4">
                             <i class="fas fa-home me-1"></i>Inicio
                         </a>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success w-100 px-4">
+                            <i class="fas fa-save me-1"></i>Guardar
+                        </button>
                     </div>
                 </div>
             </form>

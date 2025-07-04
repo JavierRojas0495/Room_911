@@ -254,7 +254,7 @@ body {
     background-color: #1a8cff;
 }
 
-/* Footer */
+/* Footer fijo solo en escritorio */
 .footer {
     background: rgba(44, 62, 80, 0.18);
     color: #fff;
@@ -350,12 +350,17 @@ body {
     }
 
     .footer {
-        padding: 4px 0 2px 0;
-        font-size: 0.82rem;
-        bottom: 0;
+        position: static !important;
+        bottom: auto !important;
+        width: 100%;
+        box-shadow: none;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(2px);
+        padding: 8px 0 4px 0;
+        font-size: 0.92rem;
     }
     .main-content {
-        padding-bottom: 60px;
+        padding-bottom: 0 !important;
     }
     .card.formulario-empleado {
         margin-bottom: 60px;
@@ -368,6 +373,25 @@ body {
     }
     .card.formulario-empleado {
         margin-bottom: 0 !important;
+    }
+    .formulario-empleado .row.mt-4,
+    .formulario-admin .row.mt-4 {
+        gap: 32px !important;
+        justify-content: center;
+    }
+    .formulario-empleado .col-6,
+    .formulario-admin .col-6 {
+        flex: 0 0 auto;
+        max-width: none;
+        padding-left: 0;
+        padding-right: 0;
+        display: flex;
+        align-items: center;
+    }
+    .formulario-empleado .btn,
+    .formulario-admin .btn {
+        width: auto;
+        min-width: 200px;
     }
 }
 
@@ -683,6 +707,25 @@ body {
         padding-left: 2em !important;
         background-position: 8px center;
         background-size: 16px 16px;
+    }
+
+    .formulario-empleado .row.mt-4 {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    .formulario-empleado .col-6 {
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+    }
+    .formulario-empleado .btn {
+        font-size: 1.25rem !important;
+        min-height: 54px !important;
+    }
+    .card {
+        margin-top: 30px !important;
+    }
+    .main-content {
+        padding-bottom: 120px !important;
     }
 }
 
@@ -1306,4 +1349,32 @@ body {
     .card.formulario-admin {
         max-width: 700px !important;
     }
+}
+
+/* FORZAR botones de acción uno al lado del otro, cuadrados, 50% cada uno, SIEMPRE */
+.formulario-empleado .row.mt-4 {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 18px !important;
+  margin-bottom: 80px !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+}
+.formulario-empleado .col-6 {
+  flex: 0 0 calc(50% - 9px) !important;
+  max-width: calc(50% - 9px) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+.formulario-empleado .btn {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  font-size: 1.1rem !important;
+  border-radius: 12px !important;
+  margin: 0 !important;
 }

@@ -53,9 +53,17 @@
                         <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese la contraseña" required>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center gap-2 mt-4">
-                    <button type="submit" class="btn btn-success px-4"><i class="fas fa-save me-1"></i>Guardar</button>
-                    <a href="{{ route('user.index') }}" class="btn btn-secondary px-4"><i class="fas fa-home me-1"></i>Inicio</a>
+                <div class="row mt-4 align-items-center justify-content-between gap-2 gap-md-0">
+                    <div class="col-6 d-flex justify-content-start">
+                        <a href="{{ route('user.index') }}" class="btn btn-secondary w-100 px-4">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success w-100 px-4">
+                            <i class="fas fa-save me-1"></i>Guardar
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
