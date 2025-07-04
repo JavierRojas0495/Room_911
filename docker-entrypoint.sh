@@ -16,8 +16,14 @@ php artisan migrate --force || echo "⚠️ Error en migraciones"
 echo "🌱 Ejecutando seeders..."
 php artisan db:seed --force || echo "⚠️ Error en seeders"
 
-echo "⚙️ Limpiando configuración..."
+echo "⚙️ Limpiando configuración y cachés de Laravel..."
 php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+
+# Opcional: puedes agregar php artisan config:cache si quieres cachear después de limpiar
+# php artisan config:cache
 
 echo "📋 Verificando logs de error..."
 tail -n 10 storage/logs/laravel.log 2>/dev/null || echo "⚠️ No hay logs disponibles"
