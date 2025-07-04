@@ -18,6 +18,25 @@ use App\Http\Controllers\AssetController;
 Route::get('/assets/css/{filename}', [AssetController::class, 'serveCss'])->where('filename', '.*\.css$');
 Route::get('/assets/js/{filename}', [AssetController::class, 'serveJs'])->where('filename', '.*\.js$');
 
+// Ruta de prueba para verificar assets
+Route::get('/test-assets', function () {
+    return response()->json([
+        'message' => 'AssetController test',
+        'css_files' => [
+            'app.css' => file_exists(public_path('css/app.css')),
+            'styles.css' => file_exists(public_path('css/styles.css')),
+            'mobile.css' => file_exists(public_path('css/mobile.css')),
+            'login.css' => file_exists(public_path('css/login.css')),
+        ],
+        'js_files' => [
+            'app.js' => file_exists(public_path('js/app.js')),
+            'allFunctions.js' => file_exists(public_path('js/allFunctions.js')),
+            'asset-checker.js' => file_exists(public_path('js/asset-checker.js')),
+        ],
+        'public_path' => public_path(),
+    ]);
+});
+
 Route::get('/', function () {
     return view('login/login');
 });
@@ -40,12 +59,8 @@ require __DIR__.'/user/user.php';
 require __DIR__.'/login/login.php';
 
 // Ruta de prueba temporal para el historial (sin autenticación)
-Route::get('/test-historial/{empleadoId}', function($empleadoId) {
-    return view('employee.history_table', [
-        'registros' => \App\Models\RegistroInicioSesion::where('employee_id', $empleadoId)->get(),
-        'fecha_inicio' => null,
-        'fecha_fin' => null
-    ]);
+Route::get('/historial', function () {
+    return view('employee.history');
 });
 
 Route::middleware('auth')->group(function () {
