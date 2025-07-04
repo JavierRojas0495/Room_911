@@ -11,10 +11,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <!-- Estilos personalizados -->
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    <!-- Estilos móvil -->
-    <link href="{{ asset('css/mobile.css') }}" rel="stylesheet">
+    <!-- Estilos personalizados usando AssetController -->
+    <link href="{{ url('/assets/css/styles.css') }}?v={{ time() }}" rel="stylesheet">
+    <!-- Estilos móvil usando AssetController -->
+    <link href="{{ url('/assets/css/mobile.css') }}?v={{ time() }}" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
