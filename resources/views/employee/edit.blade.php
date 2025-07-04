@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         paisSelect.addEventListener('change', function() {
             var paisId = this.value;
             if (paisId) {
-                fetch(`{{ url('/obtenerCiudades') }}/${paisId}`)
+                fetch(`/obtenerCiudades/${paisId}`)
                     .then(response => response.text())
                     .then(html => {
                         ciudadSelect.innerHTML = html;
