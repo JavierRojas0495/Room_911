@@ -17,6 +17,10 @@ WORKDIR /var/www/html
 # Copiar composer desde la imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Instalar Node.js 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
 # Copiar archivos del proyecto
 COPY . .
 
@@ -35,16 +39,12 @@ RUN chown -R www-data:www-data /var/www/html \
 # Instalar dependencias de Laravel (ignorando requisitos de plataforma)
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
+# Instalar dependencias de npm y compilar assets
+RUN npm install --legacy-peer-deps && npm run build
+
 # Copiar y dar permisos al script de entrada
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-# Instalar Node.js y npm
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
-# Instalar dependencias de npm y compilar assets
-RUN npm install && npm run build
 
 # Exponer el puerto 80
 EXPOSE 80
