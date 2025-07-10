@@ -36,8 +36,12 @@ RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Instalar dependencias de Laravel (ignorando requisitos de plataforma)
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+# Instalar dependencias de Laravel (actualizar si no hay lock file)
+RUN if [ -f composer.lock ]; then \
+        composer install --no-dev --optimize-autoloader --ignore-platform-reqs; \
+    else \
+        composer update --no-dev --optimize-autoloader --ignore-platform-reqs; \
+    fi
 
 # Instalar dependencias de npm y compilar assets
 RUN npm install --legacy-peer-deps && npm run build
